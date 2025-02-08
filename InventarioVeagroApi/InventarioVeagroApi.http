@@ -1,0 +1,6 @@
+@InventarioVeagroApi_HostAddress = http://localhost:5056
+
+GET {{InventarioVeagroApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
