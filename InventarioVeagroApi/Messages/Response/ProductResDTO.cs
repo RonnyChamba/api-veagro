@@ -13,9 +13,7 @@ namespace InventarioVeagroApi.Messages.Response
         public string? auxiliaryCode { get; set; }
         public string description { get; set; }
 
-        
         public decimal price { get; set; }
-
         
         public decimal amount { get; set; } 
        public decimal measurementUnit { get; set; }

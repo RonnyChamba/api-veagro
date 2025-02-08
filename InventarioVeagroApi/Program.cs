@@ -1,10 +1,16 @@
 
+using FluentValidation;
 using InventarioVeagroApi.Filters;
 using InventarioVeagroApi.Mappers;
+using InventarioVeagroApi.Messages.Request;
 using InventarioVeagroApi.Middleware;
 using InventarioVeagroApi.Models;
+using InventarioVeagroApi.Services;
+using InventarioVeagroApi.Services.impl;
+using InventarioVeagroApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace InventarioVeagroApi.Server
 
@@ -19,13 +25,34 @@ namespace InventarioVeagroApi.Server
 
             // Add services to the container
             builder.Services.AddControllers();
-            builder.Services.AddAutoMapper(typeof(ProductMappingProfile));
+            builder.Services.AddAutoMapper(
+                typeof(ProductMappingProfile),
+                typeof(UserMappingProfile)
+                );
+
 
             // aggrear contexto de coneccion 
             builder.Services.AddDbContext<ProductContext>( o => {
 
                 o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            // agregar validadores
+            //builder.Services.AddValidatorsFromAssemblyContaining<UserReqDTO>();
+            //builder.Services.AddValidatorsFromAssemblyContaining(typeof(GenericReqDTO<>)); // Registrar el validador genérico
+
+            // registrar validador individuales
+            //builder.Services.AddValidatorsFromAssemblyContaining<GenericReqDTO>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UserReqDTOValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UserUpdateReqDTOValidator>();
+
+            // registrar dependencias en el contenedor de dependencias de .NET
+
+            // Scope: crear una instancia por cada solicitud http
+            builder.Services.AddScoped<IUserService, UserServiceImpl>();
+
+            // Scope singleton: crea un sola instancia
+            //builder.Services.AddSingleton<IUserService, UserServiceImpl>();
 
 
             //  // Deshabilitar el manejo automático de validaciones, 
@@ -46,6 +73,11 @@ namespace InventarioVeagroApi.Server
             app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 
+            // Configurar el logging con el nivel deseado
+            //builder.Logging.ClearProviders();
+            builder.Logging.AddConsole(); // Agregar un proveedor de logs a la consola
+            builder.Logging.AddDebug();   // Agregar logs para la ventana de depuración
+           // builder.Logging.AddEventSourceLogger(); // Si quieres eventos en el log
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

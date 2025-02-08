@@ -61,7 +61,7 @@ namespace InventarioVeagroApi.Controllers
 
         [HttpPost]
         [Route("guardar")]
-        public async  Task<GenericRespDTO<string>> SaveProduct([FromBody] GenericReqDTO<ProductReqDTO> reqDTO)
+        public async Task<GenericRespDTO<string>> SaveProduct([FromBody] GenericReqDTO<ProductReqDTO> reqDTO)
         {
          
             if (!ModelState.IsValid)
