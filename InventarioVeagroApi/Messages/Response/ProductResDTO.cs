@@ -16,6 +16,6 @@ namespace InventarioVeagroApi.Messages.Response
         public decimal price { get; set; }
         
         public decimal amount { get; set; } 
-       public decimal measurementUnit { get; set; }
+       public string measurementUnit { get; set; }
     }
 }

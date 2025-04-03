@@ -9,7 +9,8 @@ namespace InventarioVeagroApi.Validators
             
             RuleFor(x => x.Dni)
                 .NotEmpty().WithMessage("El dni es obligatorio")
-                .MaximumLength(10).WithMessage("La longitud permitidad es 13 numeros");
+                .MinimumLength(10).WithMessage("La longitud minima permitida del dni es 10 numeros")
+                .MaximumLength(13).WithMessage("La longitud maxima permitida del dni es 13 numeros");
 
             RuleFor(x => x.Name)
               .NotEmpty().WithMessage("El name es obligatorio")

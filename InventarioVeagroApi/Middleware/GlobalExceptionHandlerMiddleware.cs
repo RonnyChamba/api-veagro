@@ -1,6 +1,7 @@
 ﻿using InventarioVeagroApi.Exceptions;
 using InventarioVeagroApi.Messages.Request;
 using InventarioVeagroApi.Messages.Response;
+using InventarioVeagroApi.Security.Service;
 using InventarioVeagroApi.Util;
 using System.Text;
 
@@ -9,10 +10,13 @@ namespace InventarioVeagroApi.Middleware
     public class GlobalExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<GlobalExceptionHandlerMiddleware> _logger;
 
-        public GlobalExceptionHandlerMiddleware(RequestDelegate next)
+        public GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
         {
+         
             _next = next;
+            _logger = logger;
         }
         public async Task InvokeAsync(HttpContext httpContext)
         {
@@ -24,7 +28,7 @@ namespace InventarioVeagroApi.Middleware
             }
             catch (Exception ex)
             {
-                Console.WriteLine("LLegando al middleweare, error");
+                _logger.LogError("Error capturado en el middlweare {}", ex);
                 // Aquí se maneja cualquier excepción no controlada
                 await HandleExceptionAsync(httpContext, ex);
             }

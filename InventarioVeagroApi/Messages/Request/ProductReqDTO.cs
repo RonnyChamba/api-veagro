@@ -17,7 +17,7 @@ namespace InventarioVeagroApi.Messages.Request
         public string mainCode { get; set; }
 
         public string? auxiliaryCode { get; set; }
-        public string description { get; set; }
+        public string? description { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public decimal price { get; set; }

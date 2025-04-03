@@ -17,5 +17,10 @@ namespace InventarioVeagroApi.Messages.Response
         public string StatusRecord { get; set; }
 
         public bool StatusAccount { get; set; }
+
+        
+        public string Address { get; set; }
+
+        public string Cellphone { get; set; }
     }
 }

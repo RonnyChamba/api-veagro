@@ -4,6 +4,7 @@ using InventarioVeagroApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventarioVeagroApi.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    partial class ProductContextModelSnapshot : ModelSnapshot
+    [Migration("20250211173321_Customers")]
+    partial class Customers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,117 +122,6 @@ namespace InventarioVeagroApi.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("InventarioVeagroApi.Models.Sale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasColumnName("direccion");
-
-                    b.Property<string>("Cellphone")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("telefono");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_creacion");
-
-                    b.Property<string>("Dni")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("dni");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("correo");
-
-                    b.Property<int>("IdCustomer")
-                        .HasColumnType("int")
-                        .HasColumnName("ide_cliente");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("nombre");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("total");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("venta");
-                });
-
-            modelBuilder.Entity("InventarioVeagroApi.Models.SaleDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("cantidad");
-
-                    b.Property<string>("AuxiliaryCode")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("code_auxiliar");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("descripcion");
-
-                    b.Property<string>("MainCode")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("code_principal");
-
-                    b.Property<string>("MeasurementUnit")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("unidad");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("nombre_producto");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("precio");
-
-                    b.Property<decimal>("Subtotal")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("subtotal");
-
-                    b.Property<int>("venta_id")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("venta_id");
-
-                    b.ToTable("venta_detalle");
-                });
-
             modelBuilder.Entity("InventarioVeagroApi.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -238,14 +130,6 @@ namespace InventarioVeagroApi.Migrations
                         .HasColumnName("ide");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("direccion");
-
-                    b.Property<string>("Cellphone")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("telefono");
 
                     b.Property<string>("Dni")
                         .IsRequired()
@@ -287,22 +171,6 @@ namespace InventarioVeagroApi.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("InventarioVeagroApi.Models.SaleDetail", b =>
-                {
-                    b.HasOne("InventarioVeagroApi.Models.Sale", "Sale")
-                        .WithMany("Details")
-                        .HasForeignKey("venta_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("InventarioVeagroApi.Models.Sale", b =>
-                {
-                    b.Navigation("Details");
                 });
 #pragma warning restore 612, 618
         }

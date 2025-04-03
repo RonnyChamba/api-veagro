@@ -51,6 +51,7 @@ namespace InventarioVeagroApi.Services.impl
             var user = _mapper.Map<User>(reqDTO.payload);
             user.StatusRecord = ConstantVeagro.STATUS_ACTIVE;
             user.StatusAccount = true;
+            user.Password = HashPassword(reqDTO.payload.Password);
 
             await _context.Users.AddAsync(user);
 
@@ -98,7 +99,9 @@ namespace InventarioVeagroApi.Services.impl
 
         async Task<GenericRespDTO<List<UserResDTO>>> IUserService.ListUser()
         {
-            var listUserEntities = await _context.Users.ToListAsync();
+            var listUserEntities = await _context.Users
+                .Where(item=> item.StatusRecord.Equals(ConstantVeagro.STATUS_ACTIVE))
+                .ToListAsync();
 
             var productDtoList = _mapper.Map<List<UserResDTO>>(listUserEntities);
 
@@ -128,9 +131,18 @@ namespace InventarioVeagroApi.Services.impl
 
             userFount.Email = reqDTO.payload.Email;
             userFount.Name = reqDTO.payload.Name;
+            userFount.Address = reqDTO.payload.Address;
+            userFount.Cellphone = reqDTO.payload.Cellphone;
             await _context.SaveChangesAsync();
 
             return GeneralUtil.CreateSuccessResp("", "Usuario actualizado correctamente");
         }
+
+        // 🔐 Hashear contraseña antes de guardarla
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
     }
 }

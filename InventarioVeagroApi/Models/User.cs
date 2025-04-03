@@ -28,6 +28,12 @@ namespace InventarioVeagroApi.Models
 
         [Column("status_account")]
         public bool StatusAccount { get; set; }
-        
+
+        [Column("direccion")]
+        public string? Address { get; set; }
+
+        [Column("telefono")]
+        public string? Cellphone { get; set; }
+
     }
 }

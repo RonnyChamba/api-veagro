@@ -8,6 +8,7 @@ using InventarioVeagroApi.Util;
 using InventarioVeagroApi.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 namespace InventarioVeagroApi.Controllers
 
 {
@@ -29,16 +30,20 @@ namespace InventarioVeagroApi.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("listar")]
         public async Task<GenericRespDTO<List<ProductResDTO>>> ListProducts() {
 
-            var productList =await  _context.Products.ToListAsync();
+            var productList =await  _context.Products
+                .Where(item=> item.recordStatus.Equals(ConstantVeagro.STATUS_ACTIVE))
+                .ToListAsync();
             var productDtoList = _mapper.Map<List<ProductResDTO>>(productList);
 
             return GeneralUtil.CreateSuccessResp(productDtoList, "Informacion obtenida correctamente");
         }
 
+        [Authorize]
         [HttpGet]
         [Route("ver/{ide}")]
         public async Task<GenericRespDTO<ProductResDTO>> FindProduct(int ide)
@@ -59,6 +64,7 @@ namespace InventarioVeagroApi.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         [Route("guardar")]
         public async Task<GenericRespDTO<string>> SaveProduct([FromBody] GenericReqDTO<ProductReqDTO> reqDTO)
@@ -99,8 +105,9 @@ namespace InventarioVeagroApi.Controllers
 
 
 
+        [Authorize]
         [HttpPut]
-        [Route("actualizar")]
+        [Route("actualizar/{ide}")]
         public async Task<GenericRespDTO<int>> UpdateProduct(int ide, [FromBody] GenericReqDTO<ProductUpdateReqDTO> reqDTO)
         {
 
@@ -130,13 +137,16 @@ namespace InventarioVeagroApi.Controllers
             productFound.description =dataToUpdate.description;
             productFound.price =dataToUpdate.price;
             productFound.amount =dataToUpdate.amount;
-            productFound.stockAvailable = productFound.stockAvailable;
+            productFound.auxiliaryCode = dataToUpdate.auxiliaryCode;
+            productFound.stockAvailable = dataToUpdate.stockAvailable;
+            productFound.measurementUnit = dataToUpdate.measurementUnit;
 
             await _context.SaveChangesAsync();
             return GeneralUtil.CreateSuccessResp(productFound.id, "Producto eliminado correctamente");
 
         }
 
+        [Authorize]
         [HttpDelete]
         [Route("eliminar/{ide}")]
         public async Task<GenericRespDTO<int>> DeleteProduct(int ide)

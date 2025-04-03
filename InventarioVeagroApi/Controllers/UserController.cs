@@ -1,6 +1,7 @@
 ﻿using InventarioVeagroApi.Messages.Request;
 using InventarioVeagroApi.Messages.Response;
 using InventarioVeagroApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventarioVeagroApi.Controllers
@@ -18,6 +19,7 @@ namespace InventarioVeagroApi.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         [Route("guardar")]
         public  async Task<GenericRespDTO<string>> CreateUser( [FromBody] GenericReqDTO<UserReqDTO> reqDTO) {
@@ -25,6 +27,7 @@ namespace InventarioVeagroApi.Controllers
           return await _userService.CreateUser(reqDTO);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("listar")]
         public async Task<GenericRespDTO<List<UserResDTO>>> ListUser()
@@ -34,15 +37,16 @@ namespace InventarioVeagroApi.Controllers
         }
 
 
+        [Authorize]
         [HttpGet]
-        [Route("listar/{ide}")]
+        [Route("ver/{ide}")]
         public async Task<GenericRespDTO<UserResDTO>> FindUser(int ide)
         {
 
             return await _userService.FindUser(ide);
         }
 
-
+        [Authorize]
         [HttpDelete]
         [Route("eliminar/{ide}")]
         public async Task<GenericRespDTO<string>> DeleteUser(int ide)
@@ -51,6 +55,7 @@ namespace InventarioVeagroApi.Controllers
             return await _userService.DeleteUser(ide);
         }
 
+        [Authorize]
         [HttpPut]
         [Route("actualizar/{ide}")]
         public async Task<GenericRespDTO<string>> UpdateUser(GenericReqDTO<UserUpdateReqDTO> reqDTO, int ide)

@@ -17,13 +17,17 @@ namespace InventarioVeagroApi.Models
 
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Sale> Sale { get; set; }
+        public DbSet<SaleDetail> SaleDetail { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            
 
             modelBuilder.Entity<Product>().HasIndex(c=> c.mainCode).IsUnique();
             modelBuilder.Entity<User>().HasIndex(c=> c.Dni).IsUnique();
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
