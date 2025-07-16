@@ -34,7 +34,6 @@ namespace InventarioVeagroApi.Controllers
             return await _customerService.ListCustomer();
         }
 
-
         [Authorize]
         [HttpGet]
         [Route("ver/{id}")]
