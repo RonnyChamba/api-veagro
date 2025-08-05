@@ -41,5 +41,11 @@ namespace InventarioVeagroApi.Models
         [ForeignKey("venta_id")]
         public Sale Sale { get; set; }
 
+        [Column("producto_id")]
+        public int? ProductId { get; set; }
+
+        [ForeignKey("ProductId")]
+        public Product? Product { get; set; }
+
     }
 }

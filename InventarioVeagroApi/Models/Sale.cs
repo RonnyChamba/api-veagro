@@ -14,7 +14,7 @@ namespace InventarioVeagroApi.Models
         public decimal Total { get; set; }
 
         [Column("ide_cliente")]
-        public int IdCustomer { get; set; }
+        public int? IdCustomer { get; set; }
 
         [Column("nombre")]
         [MaxLength(200)]
@@ -40,5 +40,14 @@ namespace InventarioVeagroApi.Models
         public DateTime CreateDate { get; set; }
 
         public List<SaleDetail> Details { get; set; } = new List<SaleDetail>();
+
+        [ForeignKey("IdCustomer")]
+        public Customer? Customer { get; set; }
+
+        [Column("ide_user")]
+        public int? IdUser { get; set; }
+
+        [ForeignKey("IdUser")]
+        public User? user { get; set; }
     }
 }

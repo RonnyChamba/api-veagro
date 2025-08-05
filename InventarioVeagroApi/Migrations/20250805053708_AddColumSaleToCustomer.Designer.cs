@@ -4,6 +4,7 @@ using InventarioVeagroApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventarioVeagroApi.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    partial class ProductContextModelSnapshot : ModelSnapshot
+    [Migration("20250805053708_AddColumSaleToCustomer")]
+    partial class AddColumSaleToCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,10 +160,6 @@ namespace InventarioVeagroApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ide_cliente");
 
-                    b.Property<int?>("IdUser")
-                        .HasColumnType("int")
-                        .HasColumnName("ide_user");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -174,8 +173,6 @@ namespace InventarioVeagroApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdCustomer");
-
-                    b.HasIndex("IdUser");
 
                     b.ToTable("venta");
                 });
@@ -309,13 +306,7 @@ namespace InventarioVeagroApi.Migrations
                         .WithMany()
                         .HasForeignKey("IdCustomer");
 
-                    b.HasOne("InventarioVeagroApi.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("IdUser");
-
                     b.Navigation("Customer");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("InventarioVeagroApi.Models.SaleDetail", b =>

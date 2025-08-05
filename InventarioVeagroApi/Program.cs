@@ -25,7 +25,7 @@ namespace InventarioVeagroApi.Server
 
         public static void Main(String[]  args) 
         {
-
+            //Console.WriteLine(BCrypt.Net.BCrypt.HashPassword("123456"));
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container
@@ -100,7 +100,10 @@ namespace InventarioVeagroApi.Server
                 });
             });
 
-
+            // Registra IHttpContextAccessor para acceder al contexto HTTP actual (HttpContext)
+            // Esto es útil para obtener información del usuario autenticado, encabezados, etc.
+            // especialmente en servicios donde no se puede inyectar directamente HttpContext.
+            builder.Services.AddHttpContextAccessor(); // en .NET 6+
             // Configurar autenticación con JWT
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
