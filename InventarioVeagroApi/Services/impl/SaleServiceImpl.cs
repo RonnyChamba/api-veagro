@@ -51,7 +51,8 @@ namespace InventarioVeagroApi.Services.impl
                 detail.ProductId = productFound.id;
             }
 
-            if (saleEntity.Dni== "9999999999999") {
+            var dniConsumidorFinal = "9999999999999";
+            if (saleEntity.Dni== dniConsumidorFinal) {
                 saleEntity.IdCustomer = null;
             }
 
