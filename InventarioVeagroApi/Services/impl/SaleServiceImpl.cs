@@ -49,6 +49,12 @@ namespace InventarioVeagroApi.Services.impl
 
                 _logger.LogInformation("Asignando el codigo principal al detalle de la venta.");
                 detail.ProductId = productFound.id;
+                detail.Description = productFound.description;
+
+                // actualizar stock
+                productFound.amount -= detail.Amount;
+                _logger.LogInformation("Stock update {stock}", productFound.amount);
+
             }
 
             var dniConsumidorFinal = "9999999999999";
@@ -78,6 +84,7 @@ namespace InventarioVeagroApi.Services.impl
 
             List<Sale> sales = await _productContext.Sale
                 .Include(s=> s.Details)
+                .OrderByDescending(s => s.CreateDate)
                 .ToListAsync();
 
             List<SaleResDTO> salesResp = sales.Select(sale => _mapperService.SaleResDTO(sale)).ToList();

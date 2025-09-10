@@ -71,6 +71,9 @@ namespace InventarioVeagroApi.Server
             builder.Services.AddScoped<IMapperService, MapperServiceImpl>();
             builder.Services.AddScoped<IReportService, ReportServiceImpl>();
             builder.Services.AddScoped<IPdfService, PdfServiceImpl>();
+            builder.Services.AddScoped<IDashboardService, DashboardServiceImpl>();
+
+            
 
             // Scope singleton: crea un sola instancia
             //builder.Services.AddSingleton<IUserService, UserServiceImpl>();

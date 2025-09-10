@@ -287,7 +287,7 @@ namespace InventarioVeagroApi.Util
                         <td>{index}</td>
                         <td>{sale.MainCode}</td>
                         <td>{sale.Amount}</td>
-                        <td>{sale.Description}</td>
+                        <td>{sale.Name}</td>
                         <td>{sale.Price}</td>
                         <td>${sale.Subtotal:F2}</td>
                     </tr>
