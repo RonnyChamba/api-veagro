@@ -2,7 +2,8 @@
 {
     public class TokenRespDTO
     {
-        public string token { set; get; }
-        public string username { set; get; }
+        public string Token { set; get; }
+        public string Username { set; get; }
+        public string Rol { set; get; }
     }
 }

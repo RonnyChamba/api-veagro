@@ -42,8 +42,9 @@ namespace InventarioVeagroApi.Security.Service
 
             var tokenRespDTO = new TokenRespDTO
             {
-                token = token,
-                username = userAuth.Dni
+                Token = token,
+                Username = userAuth.Dni,
+                Rol = userAuth.RolName
             };
     
 
